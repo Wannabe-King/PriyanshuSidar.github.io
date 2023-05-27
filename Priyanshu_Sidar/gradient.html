@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradient Generator</title>
+    <style>
+        body{
+            display: flex;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+            background-color: darkslategray;
+            justify-content: center;
+        }
+        .wrapper{
+            width: 500px;
+            height: 400px;
+            background-color: #fff;
+            padding: 30px 30px;
+            position: absolute;
+            transform:translate(-50% ,-50%);
+            left: 50%;
+            top: 50%;
+            align-items: center;
+            border-radius: 10px;
+            justify-content: center;
+        }
+        #container{
+            width: 100%;
+            height: 35vmin;
+            background-color: #f7f9fd;
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+        #btn{
+            display: flex;
+            justify-content: space-evenly;
+        }
+        #generate-btn,#copy-btn{
+            font-size: 1.2rem;
+            border-radius: 30px;
+            padding: 10px 10px;
+            margin-top: 10px;
+            width: 150px;
+            color: #f7f9fd;
+            background-color: darkslategray;
+            border: 0;
+        }
+        #hex{
+            width: 100%;
+            border: 0;
+            background-color: rgba(128, 128, 128, 0.068);
+            font-size: 1.3;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div id="container"></div>
+        <input type="text" id="hex">
+        <div id="btn">
+            <button id="generate-btn">GENERATE</button>
+            <button id="copy-btn">COPY</button>
+        </div>
+    </div>
+</body>
+<script>
+    var gen=document.getElementById('generate-btn');
+    var cpy=document.getElementById('copy-btn');
+    var cd=document.getElementById('hex');
+    var hexString='0123456789abcdf';
+    var outputColor=document.getElementById('container');
+    let randomColor = () => {
+    let hexCode = "#";
+    for( i=0; i<6; i++){
+        hexCode += hexString[Math.floor(Math.random() * hexString.length)];
+    }
+    return hexCode;
+    }
+
+    let generateGrad = () => {
+    let colorOne = randomColor();
+    let colorTwo = randomColor();
+    let angle = Math.floor(Math.random() * 360);
+    outputColor.style.background = `linear-gradient(${angle}deg, ${colorOne}, ${colorTwo})`;
+    cd.value = `background: linear-gradient(${angle}deg, ${colorOne}, ${colorTwo});`;
+}
+
+cpy.addEventListener("click", () => {
+    cd.select();
+    document.execCommand("copy");
+    alert("Code Copied To Clipboard");
+});
+
+gen.addEventListener("click", generateGrad);
+window.onload = generateGrad;
+
+
+</script>
+</html>
